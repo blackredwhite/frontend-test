@@ -50,7 +50,8 @@
                     </div>
                     <div class="unsplash-results__item-description">
                         <div class="unsplash-results__item-description-title" v-if="item.title">{{item.title}}</div>
-                        <div class="unsplash-results__item-description-author" v-if="item.user.name">Photo by {{item.user.name}}</div>
+                        <div class="unsplash-results__item-description-author" v-if="item.user.name">Photo by 
+                            <a :href="item.user.links.html" target="_blank" v-if="item.user.links.html">{{item.user.name}}</a> <span v-if="!item.user.links.html">{{item.user.name}}</span></div>
                         <div class="unsplash-results__item-description-content" v-if="item.title">{{item.description}}</div>
                         <div class="unsplash-results__item-description-date" v-if="item.published_at">Published on <span v-text="getFormatedDate(item.published_at)" /></div>
                         <a :href="item.cover_photo.links.html" class="unsplash-results__item-description-button" target="_blank" v-if="item.cover_photo.links.html">Zobacz</a>
