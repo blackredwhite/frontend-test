@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie rekrutacyjne</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <script src="assets/js/addons/axios.js"></script>
+    <script src="assets/js/addons/moment.js"></script>
+    <script src="assets/js/addons/vue.js"></script>
+    <script src="assets/js/script.js"></script>
+</head>
+<body class="unsplash">
+
+    <div class="unsplash-container" id="unsplash">
+        <header class="unsplash-header">
+            <h1>API Unsplash</h1>
+        </header>
+
+        <section class="unsplash-search">
+            <input type="text" v-model="resultPhrase" v-on:keyup.enter="searchPhrase" placeholder="Enter keywords e.g. dog" class="unsplash-search__field">
+            <input type="submit" value="Search" class="unsplash-search__field unsplash-search__field--submit">
+        </section>
+
+        <section class="unsplash-results">
+            <div class="unsplash-results__head">
+                <div class="unsplash-results__head-count">{{ resultFound }} Results found</div>
+                <div class="unsplash-results__head-grid">
+                    <i class="fas fa-th-list" v-on:click="setListView('list')" v-bind:class="{ active: (resultView == 'list') }"></i>
+                    <i class="fas fa-th-large" v-on:click="setListView('grid')" v-bind:class="{ active: (resultView == 'grid') }"></i>
+                </div>
+            </div>
+
+            <div class="unsplash-results__container" v-bind:class="{ 'unsplash-results__container--list': (resultView == 'list'), 'unsplash-results__container--grid': (resultView == 'grid')}">
+
+                <div class="unsplash-results__loading" v-if="resultLoading">
+                    <img src="assets/images/spinning-loading.gif" alt="">
+                </div>
+
+                <div class="unsplash-results__item" v-for="item in resultContent" :key="item.id">
+                    <div class="unsplash-results__item-photo">
+                        <div class="unsplash-results__item-photo-favourite">
+                            <i class="fas fa-star" v-if="getStar(item.published_at)"></i>
+                        </div>
+                        <img :src="item.cover_photo.urls.small" :alt="item.title">
+                    </div>
+                    <div class="unsplash-results__item-description">
+                        <div class="unsplash-results__item-description-title" v-if="item.title">{{item.title}}</div>
+                        <div class="unsplash-results__item-description-author" v-if="item.user.name">Photo by {{item.user.name}}</div>
+                        <div class="unsplash-results__item-description-content" v-if="item.title">{{item.description}}</div>
+                        <div class="unsplash-results__item-description-date" v-if="item.published_at">Published on <span v-text="getFormatedDate(item.published_at)" /></div>
+                        <a :href="item.cover_photo.links.html" class="unsplash-results__item-description-button" target="_blank" v-if="item.cover_photo.links.html">Zobacz</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    
+</body>
+</html>

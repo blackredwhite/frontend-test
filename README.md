@@ -1,2 +1,1 @@
-# frontend-test
-Test frontend
+Ściągnąć paczkę z github'a odpalić w przeglądarce.
