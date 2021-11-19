@@ -23,7 +23,7 @@
 
         <section class="unsplash-search">
             <input type="text" v-model="resultPhrase" v-on:keyup.enter="searchPhrase" placeholder="Enter keywords e.g. dog" class="unsplash-search__field">
-            <input type="submit" value="Search" class="unsplash-search__field unsplash-search__field--submit">
+            <input type="submit" value="Search" v-on:click="searchPhrase" class="unsplash-search__field unsplash-search__field--submit">
         </section>
 
         <section class="unsplash-results">
